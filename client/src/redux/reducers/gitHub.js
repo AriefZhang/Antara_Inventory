@@ -1,5 +1,7 @@
 const gitState = {
   data: [],
+  repo: [],
+  isLoading: true,
 };
 
 const reducer = (state = gitState, action) => {
@@ -10,7 +12,16 @@ const reducer = (state = gitState, action) => {
         ... state,
         data: payload
       }  
-    
+    case 'repo/fetchGit':
+      return {
+        ... state,
+        data: payload
+      }  
+    case 'loading/fetchGit':
+      return {
+        ... state,
+        isLoading: payload
+      }  
   
     default:
       return state
