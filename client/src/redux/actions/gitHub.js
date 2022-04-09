@@ -7,7 +7,7 @@ export function setGit(payload) {
   }
 }
 
-export function setGit(payload) {
+export function setGitRepo(payload) {
   return {
     type: 'repo/fetchGit',
     payload
