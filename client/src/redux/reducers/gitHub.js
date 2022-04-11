@@ -9,17 +9,17 @@ const reducer = (state = gitState, action) => {
   switch (type) {
     case 'git/fetchGit':
       return {
-        ... state,
+        ...state,
         data: payload
       }  
     case 'repo/fetchGit':
       return {
-        ... state,
+        ...state,
         data: payload
       }  
     case 'loading/fetchGit':
       return {
-        ... state,
+        ...state,
         isLoading: payload
       }  
   
