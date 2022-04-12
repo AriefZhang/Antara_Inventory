@@ -22,7 +22,7 @@ export default function Home() {
         <div className="md:container mx-auto mx-auto flex justify-center">
           <div className="inputUser flex-row">
             <div className="gitLogo">
-              <img src="https://cdn-icons-png.flaticon.com/512/1051/1051377.png?w=360" alt=""/>
+              <img src="https://cdn-icons-png.flaticon.com/512/1051/1051377.png?w=360" alt="" className="w-2/3 m-auto"/>
             </div>
             <div className="formUser flex justify-center">
               <form>
