@@ -98,7 +98,7 @@ export default function User() {
         </div>
       </div>
       <div className="p-5 flex flex-col h-5/6 my-10 col-span-2 overflow-auto hover:overflow-y-scroll">
-        <div className="flex flex-row justify-start grid grid-cols-2 w-full h-5/6 gap-4 drop-shadow-2xl ">
+        <div className="flex flex-row justify-start grid grid-cols-2 w-full h-5/6 gap-4 drop-shadow-2xl">
           {repo
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
             .map((rep, i) => {
