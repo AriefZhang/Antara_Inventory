@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUser } from "../redux/actions/gitHub";
+import { checkUser, checkUserCommit } from "../redux/actions/gitHub";
 import { useParams } from "react-router-dom";
+import Commit from "./commit";
 
 export default function User() {
   const dispatch = useDispatch();
   const { user } = useParams();
 
-  const { data, repo, isLoading } = useSelector((state) => state.gitReducer);
+  const { data, repo, commit, isLoading } = useSelector((state) => state.gitReducer);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(checkUser(user));
@@ -31,10 +34,16 @@ export default function User() {
     );
   }
 
+  const seeCommit = ({user, repo}) => {
+    dispatch(checkUserCommit(user + "/" + repo))
+    setShowModal(true)
+  }
+
   return (
     <div className="md:container flex flex-row md:flex-col  h-screen grid grid-cols-3 m-auto gap-4">
+      <Commit showModal={showModal} setShowModal={setShowModal} commit={commit}/>
       <div className="p-5 flex flex-col my-10 m-auto drop-shadow-2xl box-border w-full h-5/6 items-center ">
-        <div className="pt-5 flex flex-col items-center bg-white rounded-xl">
+        <div className="flex flex-col items-center bg-white rounded-xl">
           <img
             src={data.avatar_url}
             className="rounded-xl p-2 drop-shadow-xl"
@@ -94,7 +103,7 @@ export default function User() {
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
             .map((rep, i) => {
               return (
-                <a href="#" >
+                <a href="#" onClick={() => seeCommit({user: rep.owner.login, repo: rep.name})}>
                   <div
                     key={i}
                     className="flex flex-cols justify-start h-36 min-h-full w-full bg-slate-100 hover:bg-gray-200 rounded-md relative overflow-hidden"
@@ -106,7 +115,7 @@ export default function User() {
                       <h3>{rep.description}</h3>
                     </div>
                     <hr />
-                    <div className="flex items-center h-8 bg-orange-500 absolute px-3 right-0 top-0 rounded-bl-lg">
+                    <div className="flex items-center h-8 bg-gray-500 absolute px-3 right-0 top-0 rounded-bl-lg">
                       <h1 className="text-white">{rep.language}</h1>
                     </div>
                     <div className="bg-white w-full h-2/6 absolute bottom-0 left-0" />
@@ -143,10 +152,10 @@ export default function User() {
                       className="absolute flex gap-2"
                       style={{ right: 10, bottom: 10 }}
                     >
-                      <h3 className="bg-lime-700 px-4 rounded-lg text-white">
+                      <h3 className="bg-lime-600 px-4 rounded-lg text-white">
                         {rep.default_branch}
                       </h3>
-                      <h3 className="bg-yellow-700 px-4 rounded-lg text-white">
+                      <h3 className="bg-yellow-600 px-4 rounded-lg text-white">
                         {rep.visibility}
                       </h3>
                     </div>

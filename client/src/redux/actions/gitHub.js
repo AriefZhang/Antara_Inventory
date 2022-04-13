@@ -1,4 +1,5 @@
 import git from "../../API/gitHub";
+import commit from "../../API/gitHubRepo"
 
 export function setGit(payload) {
   return {
@@ -44,10 +45,22 @@ export function checkUser(payload) {
 
 export function checkUserCommit(payload) {
   return (dispatch) => {
-    git
+    commit
       .get(payload + '/commits')
       .then(({ data }) => {
-        dispatch(setGit(data));
+        dispatch(setGitRepoCommit(data));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => dispatch(setLoading(false)));
+  };
+}
+
+export function clearUserCommit(payload) {
+  return (dispatch) => {
+    commit
+      .get(payload + '/commits')
+      .then(() => {
+        dispatch(setGitRepoCommit([]));
       })
       .catch((err) => console.log(err))
       .finally(() => dispatch(setLoading(false)));
